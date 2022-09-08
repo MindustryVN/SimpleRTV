@@ -21,15 +21,15 @@ public class Maps extends BaseCommand{
             try {
                 page = Integer.parseInt(args[0]);
             } catch (NumberFormatException e) {
-                player.sendMessage("[red]Page must be a number");
+                player.sendMessage("[red]Trang phải là một số");
                 return;
             }
         }
         if (page < 1 || page > max_page){
-            player.sendMessage("[red]Invalid page");
+            player.sendMessage("[red]Trang không hợp lệ");
             return;
         }
-        player.sendMessage("[green]Available maps: [white](" + page + "/" + max_page + ")");
+        player.sendMessage("[green]Danh sách bản đồ: [white](" + page + "/" + max_page + ")");
         for (int i = 0; i < 5; i++){
             int map_id = (page - 1) * 5 + i;
             if (map_id > maps.size - 1){

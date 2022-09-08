@@ -57,16 +57,19 @@ public class VoteHandler {
         if (getVoteCount(map_id) >= getRequire()){
             Seq<Map> maps = new Seq<>();
             maps.addAll(Vars.maps.customMaps());
-            Call.sendMessage("[red]RTV: [green]Vote passed! Changing map...");
+            Call.sendMessage("[red]RTV: [green]Bỏ phiếu thành công. Tiến hành chuyển map...");
             Seq<ApplicationListener> listeners = Core.app.getListeners();
             for (ApplicationListener listener: listeners) {
                 if (listener instanceof ServerControl){
                     ((ServerControl) listener).setNextMap(maps.get(map_id));
-                    reset();
                     Events.fire(new EventType.GameOverEvent(Team.crux));
                     return;
                 }
             }
         }
+    }
+
+    public static boolean isBeingVoting(int map_id){
+        return votes[map_id] != null;
     }
 }

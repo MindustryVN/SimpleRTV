@@ -21,11 +21,14 @@ public class SimpleRTV extends Plugin {
                 }
             }
         });
+        Events.on(EventType.GameOverEvent.class, event -> {
+            VoteHandler.reset();
+        });
     }
 
     @Override
     public void registerClientCommands(CommandHandler handler) {
-        handler.register("rtv", "<map_id>", "Vote to change map (map id in /maps)", RTV::new);
-        handler.register("maps", "[page]", "Display available maps", Maps::new);
+        handler.register("rtv", "<map_id>", "Bỏ phiếu để thay đổi bản đồ (map id nằm trong lệnh /maps)", RTV::new);
+        handler.register("maps", "[trang]", "Hiển thị các bản đồ hiện có", Maps::new);
     }
 }

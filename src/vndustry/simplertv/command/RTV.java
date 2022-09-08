@@ -23,24 +23,31 @@ public class RTV extends BaseCommand {
         try {
             map_id = Integer.parseInt(args[0]);
         } catch (NumberFormatException e) {
-            player.sendMessage("[red]Map id must be a number");
+            player.sendMessage("[red]ID của bản đồ phải là một số");
             return;
         }
         Seq<Map> maps = new Seq<>();
         maps.addAll(Vars.maps.customMaps());
         if (map_id < 0 || map_id > (maps.size - 1)) {
-            player.sendMessage("[red]Invalid map id");
+            player.sendMessage("[red]ID của bản đồ không hợp lệ");
             return;
         }
         if (VoteHandler.isVoted(player, map_id)){
-            Call.sendMessage("[red]RTV: " + player.name + " [accent]removed their vote for [yellow]" + maps.get(map_id).name());
+            Call.sendMessage("[red]RTV: " + player.name + " [accent]đã hủy bỏ phiếu cho bản đồ [yellow]" + maps.get(map_id).name() + "[green](" + VoteHandler.getVoteCount(map_id) + "/" + VoteHandler.getRequire() + ")");
             VoteHandler.removeVote(player, map_id);
             return;
         }
+        if (VoteHandler.isBeingVoting(map_id)){
+            Call.sendMessage("[red]RTV: " + player.name + " [accent]đã bỏ phiếu cho bản đồ [yellow]" + maps.get(map_id).name() + "[green](" + VoteHandler.getVoteCount(map_id) + "/" + VoteHandler.getRequire() + ")");
+            player.sendMessage("[red]RTV: [white]Sử dụng /rtv " + map_id + " thêm một lần nữa để hủy bỏ phiếu cho bản đồ này !");
+            VoteHandler.vote(player, map_id);
+            return;
+        }
         VoteHandler.vote(player, map_id);
-        Call.sendMessage("[red]RTV: [accent]" + player.name() + " [white]Want to change map to [yellow]" + maps.get(map_id).name());
-        Call.sendMessage("[red]RTV: [white]Current Vote for [yellow]" + maps.get(map_id).name() + "[white]: [green]" + VoteHandler.getVoteCount(map_id) + "/" + VoteHandler.getRequire());
-        Call.sendMessage("[red]RTV: [white]Use [yellow]/rtv " + map_id + " [white]to add your vote to this map !");
+        Call.sendMessage("[red]RTV: [accent]" + player.name() + " [white]Muốn chuyển bản đồ sang [yellow]" + maps.get(map_id).name());
+        Call.sendMessage("[red]RTV: [white]Số lượng phiếu [yellow]" + maps.get(map_id).name() + "[white]: [green]" + VoteHandler.getVoteCount(map_id) + "/" + VoteHandler.getRequire());
+        Call.sendMessage("[red]RTV: [white]Sử dụng [yellow]/rtv " + map_id + " [white]để bỏ phiếu cho bản đồ này !");
+        player.sendMessage("[red]RTV: [white]Sử dụng /rtv " + map_id + " thêm một lần nữa để hủy bỏ phiếu cho bản đồ này !");
         VoteHandler.check(map_id);
     }
 }

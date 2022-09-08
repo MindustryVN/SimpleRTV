@@ -3,5 +3,5 @@
   "author": "NgLam2911",
   "main": "vndustry.simplertv.SimpleRTV",
   "description": "A plugin to change map by /rtv.",
-  "version": 0.1
+  "version": "0.1.1"
 }
